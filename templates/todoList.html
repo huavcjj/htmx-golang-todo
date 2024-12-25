@@ -3,9 +3,13 @@
     {{range .}}
     <li
         style="margin-bottom: 10px; padding: 5px; border-bottom: 1px solid #ccc">
-        {{ .Task }}
+        <span
+            {{if .Done}}
+            style="text-decoration: line-through; color: #999"
+            {{else}}
+            {{end}}>{{ .Task }}</span>
         <a href="#" hx-get="/gettaskupdateform/{{.Id}}"
-            hx-target="#taskForm">Edit</a>
+            hx-target="#taskForm">[Edit]</a>
     </li>
     {{else}}
     <li style="color: #999">No tasks available</li>

@@ -49,7 +49,7 @@ func main() {
 	router.HandleFunc("/tasks", addTask).Methods("POST")
 	router.HandleFunc("/getnewtaskform", getTaskForm).Methods("GET")
 	router.HandleFunc("/gettaskupdateform/{id}", getTaskUpdateForm).Methods("GET")
-	router.HandleFunc("/tasks/{id}", updateTask).Methods("POST", "PUT")
+	router.HandleFunc("/tasks/{id}", updateTask).Methods("PUT")
 
 	if err := http.ListenAndServe(":3000", router); err != nil {
 		log.Fatal(err)
@@ -148,8 +148,9 @@ func updateTask(w http.ResponseWriter, r *http.Request) {
 	case "no", "off":
 		taskStatus = false
 	default:
-		http.Error(w, "Invalid value for 'done'", http.StatusBadRequest)
-		return
+		// http.Error(w, "Invalid value for 'done'", http.StatusBadRequest)
+		// return
+		taskStatus = false
 	}
 
 	task := Task{
