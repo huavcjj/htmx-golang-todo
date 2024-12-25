@@ -1,0 +1,12 @@
+{{define "addTaskForm"}}
+<form>
+    <div>
+        <input type="text" name="task" class="input is-dark" placeholder="Enter a task" required>
+    </div>
+    <div>
+        <button hx-post="/tasks" hx-target="#taskList" type="submit" class="button is-dark"
+            style="margin-top: 10px;">Add
+            Task</button>
+    </div>
+</form>
+{{end}}

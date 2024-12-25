@@ -1,0 +1,11 @@
+{{define "todoList"}}
+<ul>
+    {{range .}}
+    <li style="margin-bottom: 10px; padding: 5px; border-bottom: 1px solid #ccc;">
+        {{ .Task }}
+    </li>
+    {{else}}
+    <li style="color: #999;">No tasks available</li>
+    {{end}}
+</ul>
+{{end}}

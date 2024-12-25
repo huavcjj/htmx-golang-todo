@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="section">
+            <h2>Tasks</h2>
+            <div id="taskList" class="box" hx-get="/tasks" hx-trigger="load">
+                <p>Loading tasks...</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Task Form</h2>
+
+            {{template "addTaskForm"}}
+        </div>
+
+</body>
+
+</html>
