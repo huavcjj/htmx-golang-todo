@@ -1,11 +1,14 @@
 {{define "todoList"}}
 <ul>
     {{range .}}
-    <li style="margin-bottom: 10px; padding: 5px; border-bottom: 1px solid #ccc;">
+    <li
+        style="margin-bottom: 10px; padding: 5px; border-bottom: 1px solid #ccc">
         {{ .Task }}
+        <a href="#" hx-get="/gettaskupdateform/{{.Id}}"
+            hx-target="#taskForm">Edit</a>
     </li>
     {{else}}
-    <li style="color: #999;">No tasks available</li>
+    <li style="color: #999">No tasks available</li>
     {{end}}
 </ul>
 {{end}}

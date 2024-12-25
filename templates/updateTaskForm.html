@@ -1,12 +1,17 @@
-{{define "addTaskForm"}}
+{{define "updateTaskForm"}}
 <form>
     <div>
         <input
             type="text"
             name="task"
+            value="{{.Task}}"
             class="input is-dark"
             placeholder="Enter a task"
             required />
+    </div>
+
+    <div>
+        <input type="checkbox" name="done" {{if .Done}} checked {{end}}>
     </div>
 
     <div>
