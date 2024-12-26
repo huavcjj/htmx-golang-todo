@@ -50,6 +50,7 @@ func main() {
 	router.HandleFunc("/getnewtaskform", getTaskForm).Methods("GET")
 	router.HandleFunc("/gettaskupdateform/{id}", getTaskUpdateForm).Methods("GET")
 	router.HandleFunc("/tasks/{id}", updateTask).Methods("PUT")
+	router.HandleFunc("/tasks/{id}", deleteTask).Methods("DELETE")
 
 	if err := http.ListenAndServe(":3000", router); err != nil {
 		log.Fatal(err)
@@ -175,6 +176,41 @@ func updateTask(w http.ResponseWriter, r *http.Request) {
 
 	if rowsAffected == 0 {
 		http.Error(w, "No rows updated", http.StatusNotFound)
+		return
+	}
+
+	todos, err := getTasks(db)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if err := tmpl.ExecuteTemplate(w, "todoList", todos); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+}
+
+func deleteTask(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	taskId, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		http.Error(w, "Invalid task ID", http.StatusBadRequest)
+		return
+	}
+
+	query := "DELETE FROM tasks WHERE id = ?"
+
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer stmt.Close()
+
+	_, err = stmt.Exec(taskId)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
